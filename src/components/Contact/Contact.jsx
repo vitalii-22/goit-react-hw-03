@@ -2,7 +2,7 @@ import { FiPhone } from 'react-icons/fi';
 import { FiUser } from 'react-icons/fi';
 import css from './Contact.module.css';
 
-const Contact = ({ name, number }) => {
+const Contact = ({ id, name, number, onDeleteContact }) => {
   return (
     <>
       <div className={css.contactWrapper}>
@@ -15,7 +15,11 @@ const Contact = ({ name, number }) => {
         </p>
       </div>
 
-      <button className={css.deleteButton} type="button">
+      <button
+        onClick={() => onDeleteContact(id)}
+        className={css.deleteButton}
+        type="button"
+      >
         Delete
       </button>
     </>
