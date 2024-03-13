@@ -37,7 +37,11 @@ function App() {
     setContacts(contacts.filter(contact => contact.id !== contactDataId));
   };
 
+  const [searchName, setSearchName] = useState('');
+
   const handleSearchChange = evt => {
+    setSearchName(evt.target.value.toLowerCase());
+    console.log(searchName);
     setContacts(
       contacts.filter(contact =>
         contact.name.toLowerCase().includes(evt.target.value.toLowerCase())
@@ -46,12 +50,20 @@ function App() {
     console.log(evt.target.value.toLowerCase());
   };
 
+  useEffect(() => {
+    setContacts(
+      contacts.filter(contact =>
+        contact.name.toLowerCase().includes(searchName)
+      )
+    );
+  }, [searchName]);
+
   return (
     <div>
       <h1 className="title">Phonebook</h1>
 
       <ContactForm contacts={contacts} onAddNewContact={onAddNewContact} />
-      <SearchBox handleSearchChange={handleSearchChange} contacts={contacts} />
+      <SearchBox onChange={handleSearchChange} searchName={searchName} />
       <ContactList contacts={contacts} onDeleteContact={handleDelete} />
     </div>
   );
