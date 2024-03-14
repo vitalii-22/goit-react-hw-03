@@ -41,22 +41,14 @@ function App() {
 
   const handleSearchChange = evt => {
     setSearchName(evt.target.value.toLowerCase());
-    console.log(searchName);
-    setContacts(
-      contacts.filter(contact =>
-        contact.name.toLowerCase().includes(evt.target.value.toLowerCase())
-      )
-    );
-    console.log(evt.target.value.toLowerCase());
+    console.log(getFilteredContacts());
   };
 
-  useEffect(() => {
-    setContacts(
-      contacts.filter(contact =>
-        contact.name.toLowerCase().includes(searchName)
-      )
+  const getFilteredContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(searchName)
     );
-  }, [searchName]);
+  };
 
   return (
     <div>
@@ -64,7 +56,10 @@ function App() {
 
       <ContactForm contacts={contacts} onAddNewContact={onAddNewContact} />
       <SearchBox onChange={handleSearchChange} searchName={searchName} />
-      <ContactList contacts={contacts} onDeleteContact={handleDelete} />
+      <ContactList
+        contacts={getFilteredContacts()}
+        onDeleteContact={handleDelete}
+      />
     </div>
   );
 }
